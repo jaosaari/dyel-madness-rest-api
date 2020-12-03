@@ -1,0 +1,22 @@
+{
+  "name": "dyel-madness-rest-api",
+  "version": "1.0.0",
+  "description": "This is the rest API for the DYEL Madness App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaosaari/dyel-madness-rest-api.git"
+  },
+  "author": "Janne Saari",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaosaari/dyel-madness-rest-api/issues"
+  },
+  "homepage": "https://github.com/jaosaari/dyel-madness-rest-api#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
