@@ -13,20 +13,36 @@ mongoose
     console.log("error connecting to MongoDB:", error.message)
   })
 
-const noteSchema = new mongoose.Schema({
-  content: {
+const workoutSchema = new mongoose.Schema({
+  lift: {
     type: String,
-    minlength: 5,
-    required: true,
   },
-  date: {
-    type: Date,
-    required: true,
+  max: {
+    type: Number,
   },
-  important: Boolean,
+  next: {
+    type: Boolean,
+  },
+  week: {
+    type: Number,
+  },
+  queue: {
+    type: Number,
+  },
+  assLiftOne: {
+    type: Object,
+  },
+  assLiftTwo: {
+    type: Object,
+  },
+  // content: {
+  //   type: String,
+  //   minlength: 5,
+  //   required: true,
+  // },
 })
 
-noteSchema.set("toJSON", {
+workoutSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
     delete returnedObject._id
@@ -34,4 +50,4 @@ noteSchema.set("toJSON", {
   },
 })
 
-module.exports = mongoose.model("Note", noteSchema)
+module.exports = mongoose.model("Workout", workoutSchema)

@@ -2,41 +2,47 @@ const express = require("express")
 const app = express()
 const cors = require("cors")
 require("dotenv").config()
-const Note = require("./models/note")
+const Workout = require("./models/workout")
 
 app.use(cors())
 app.use(express.json())
 app.use(express.static("build"))
 
-app.get("/api/notes", (request, response) => {
-  Note.find({}).then(notes => {
-    response.json(notes.map(note => note.toJSON()))
+app.get("/api/workouts", (request, response) => {
+  Workout.find({}).then(workouts => {
+    response.json(workouts.map(workout => workout.toJSON()))
   })
 })
 
-app.post("/api/notes", (request, response, next) => {
+app.post("/api/workouts", (request, response, next) => {
   const body = request.body
 
-  const note = new Note({
-    content: body.content,
-    important: body.important || false,
-    date: new Date(),
+  const workout = new Workout({
+    lift: body.lift,
+    max: body.max,
+    next: body.next,
+    week: body.week,
+    queue: body.queue,
+    assLiftOne: body.assLiftOne,
+    assLiftTwo: body.assLiftTwo,
+    // important: body.important || false,
+    // date: new Date(),
   })
 
-  note
+  workout
     .save()
-    .then(savedNote => savedNote.toJSON())
-    .then(savedAndFormattedNote => {
-      response.json(savedAndFormattedNote)
+    .then(savedWorkout => savedWorkout.toJSON())
+    .then(savedAndFormattedWorkout => {
+      response.json(savedAndFormattedWorkout)
     })
     .catch(error => next(error))
 })
 
-app.get("/api/notes/:id", (request, response, next) => {
-  Note.findById(request.params.id)
-    .then(note => {
-      if (note) {
-        response.json(note.toJSON())
+app.get("/api/workouts/:id", (request, response, next) => {
+  Workout.findById(request.params.id)
+    .then(workout => {
+      if (workout) {
+        response.json(workout.toJSON())
       } else {
         response.status(404).end()
       }
@@ -44,25 +50,25 @@ app.get("/api/notes/:id", (request, response, next) => {
     .catch(error => next(error))
 })
 
-app.delete("/api/notes/:id", (request, response, next) => {
-  Note.findByIdAndRemove(request.params.id)
+app.delete("/api/workouts/:id", (request, response, next) => {
+  Workout.findByIdAndRemove(request.params.id)
     .then(result => {
       response.status(204).end()
     })
     .catch(error => next(error))
 })
 
-app.put("/api/notes/:id", (request, response, next) => {
+app.put("/api/workouts/:id", (request, response, next) => {
   const body = request.body
 
-  const note = {
+  const workout = {
     content: body.content,
     important: body.important,
   }
 
-  Note.findByIdAndUpdate(request.params.id, note, { new: true })
-    .then(updatedNote => {
-      response.json(updatedNote.toJSON())
+  Workout.findByIdAndUpdate(request.params.id, workout, { new: true })
+    .then(updatedWorkout => {
+      response.json(updatedWorkout.toJSON())
     })
     .catch(error => next(error))
 })
